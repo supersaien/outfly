@@ -345,6 +345,15 @@ function inici_del_worker_de_les_colisions()
         document.getElementById("resultat_worker_de_les_colisions").innerHTML="Sorry! No Web Worker support.";
         }
     }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(function () {
+          console.log('service worker registered');
+        })
+        .catch(function () {
+          console.warn('service worker failed');
+        });
+    }
 </script>
 </div>
 </body>
