@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/png" href="favicon.png" />
+		<title>
+		outfly
+		</title>
+		<style>
+@media only screen and (min-width: 360px) {
+html,body {
+  -webkit-text-size-adjust: none;
+  background-color: black;
+  color: white;
+  width: 360px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position:sticky;
+  font-weight:normal;
+  font-family: "Courier New", Courier, monospace;
+}
+.general {
+  -webkit-text-size-adjust: none;
+  background-color: black;
+  color: white;
+  width: 360px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position:sticky;
+  font-weight:normal;
+  font-family: "Courier New", Courier, monospace;
+}
+}
+		</style>
+		<script>
+        /*    
+        @licstart  The following is the entire license notice for the 
+        JavaScript code in this page.
+
+        Copyright (C) 2019  Bonjour
+
+        The JavaScript code in this page is free software: you can
+        redistribute it and/or modify it under the terms of the GNU
+        General Public License (GNU GPL) as published by the Free Software
+        Foundation, either version 3 of the License, or (at your option)
+        any later version.  The code is distributed WITHOUT ANY WARRANTY;
+        without even the implied warranty of MERCHANTABILITY or FITNESS
+        FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+        As additional permission under GNU GPL version 3 section 7, you
+        may distribute non-source (e.g., minimized or compacted) forms of
+        that code without the copy of the GNU GPL normally required by
+        section 4, provided you include this license notice and a URL
+        through which recipients can access the Corresponding Source.   
+
+
+        @licend  The above is the entire license notice
+        for the JavaScript code in this page.
+        */
+        </script>
+<script type="text/javascript">
+//inici script HEAD
+//backgrounds
+var posicio_cotxe=140;
+var background_Montserrat=new Image();
+background_Montserrat.setAttribute("src", "background_Montserrat.gif");
+background_Montserrat.setAttribute("width", "360");
+background_Montserrat.setAttribute("height", "360");
+background_Montserrat.setAttribute("id", "background");
+background_Montserrat.setAttribute("style", "position: absolute;z-index:-99;left:0px;top:0px");
+var background_Sahara=new Image();
+background_Sahara.setAttribute("src", "background_Sahara.gif");
+background_Sahara.setAttribute("width", "360");
+background_Sahara.setAttribute("height", "360");
+background_Sahara.setAttribute("id", "background");
+background_Sahara.setAttribute("style", "position: absolute;z-index:-99;left:0px;top:0px");
+var background_Fujiyama=new Image();
+background_Fujiyama.setAttribute("src", "background_Fujiyama.gif");
+background_Fujiyama.setAttribute("width", "360");
+background_Fujiyama.setAttribute("height", "360");
+background_Fujiyama.setAttribute("id", "background");
+background_Fujiyama.setAttribute("style", "position: absolute;z-index:-99;left:0px;top:0px");
+var background_Egipt=new Image();
+background_Egipt.setAttribute("src", "background_Egipt.gif");
+background_Egipt.setAttribute("width", "360");
+background_Egipt.setAttribute("height", "360");
+background_Egipt.setAttribute("id", "background");
+background_Egipt.setAttribute("style", "position: absolute;z-index:-99;left:0px;top:0px");
+var background_China=new Image();
+background_China.setAttribute("src", "background_China.gif");
+background_China.setAttribute("width", "360");
+background_China.setAttribute("height", "360");
+background_China.setAttribute("id", "background");
+background_China.setAttribute("style", "position: absolute;z-index:-99;left:0px;top:0px");
+//car
+var cotxe_img=new Image();
+cotxe_img.setAttribute("src", "car.png");
+cotxe_img.setAttribute("width", "80");
+cotxe_img.setAttribute("height", "40");
+cotxe_img.setAttribute("id", "cotxeid");
+cotxe_img.setAttribute("style", "position: absolute; left:" + posicio_cotxe + "px; top:318px; z-index:4;");
+//transit
+var transit=new Array();
+for (var i=1;i<17;i++)
+    {
+    transit[i]=new Image();
+    }
+for (var i=1;i<17;i++)
+    {
+    transit[i].setAttribute("src", "car" + i + ".png");
+    transit[i].setAttribute("id", "transitid");
+    }
+var gameover=false;
+var inici=false;
+var velocitat=0;
+var transit_posicio_horitzontal;
+var transit_posicio_vertical;
+var transit_amplada_cotxe;
+var transit_color_cotxe;
+var punts;
+var stage_background;
+var conta_losers;
+if (inici==false)
+    {
+    posicio_cotxe=140;
+    inici=true;
+    }
+function moure()
+    {
+    if (gameover==true)
+        {
+        worker_del_transit.terminate();
+        worker_dels_punts.terminate();
+        worker_de_les_colisions.terminate();
+        //location.reload();
+        //Que no recarregui;
+        gameover=false;
+        worker_del_transit=undefined;
+        worker_dels_punts=undefined;
+        worker_de_les_colisions=undefined;
+        inici_del_worker_del_transit();
+        inici_del_worker_dels_punts();
+        inici_del_worker_de_les_colisions();
+        velocitat=0;
+        document.getElementById("cotxeid").style.visibility="visible";
+        document.getElementById("pantalla_del_joc").style.visibility="visible";
+        document.getElementById("titol_controls").innerHTML="&#x25C0; control buttons &#x25B6;";
+        document.getElementById("gameover").innerHTML="";
+        document.getElementById("gameover").style.visibility="hidden";
+        document.getElementById("gameover_mostrar_punts").innerHTML="";
+        document.getElementById("gameover_mostrar_punts").style.visibility="hidden";
+        document.getElementById("transit").style.visibility="visible";
+        } 
+    if (velocitat==-1 && posicio_cotxe>10)
+        {
+        posicio_cotxe=posicio_cotxe-5;
+        }
+    if (velocitat==1 && posicio_cotxe<270)
+        {    
+        posicio_cotxe=posicio_cotxe+5;;
+        }
+    if ((velocitat==-1 || velocitat==1) && posicio_cotxe>10 && posicio_cotxe<270)
+        {
+        document.getElementById("cotxeid").style.left = posicio_cotxe + "px";
+        window.setTimeout(moure,20);
+        }
+    }
+</script>
+</head>
+<body onload="inici_del_worker_del_transit(); inici_del_worker_dels_punts(); inici_del_worker_de_les_colisions();">
+<div  class="general">
+<!-- inici GENERAL -->
+<div class='pantalla_del_joc' id='pantalla_del_joc' width='360px' height='360px' style='position:absolute;left:0px;top:0px;'>
+<!-- inici PANTALLA DEL JOC -->
+<!-- TRANSIT -->
+<output id="resultat_worker_del_transit"></output>
+<!-- SCORE -->
+<div class="score" style="height:20px; color:white; font-size:12; text-align:left;">
+<b>Score: <output id="resultat_worker_dels_punts"></output>00</b>
+</div>
+<!-- STAGE -->
+<div class="stage" style="height:20px; color:white; font-size:12; text-align:left;">
+<b>Stage: <span id="span_stage"></span></b>
+</div>
+<!-- LOSERS -->
+<div class="losers" style="height:20px; color:white; font-size:12; text-align:left;">
+<b>Losers: <span id="span_contador_losers"></span></b>
+</div>
+<!-- GAME OVER -->
+<div style="text-align:center;position: absolute;z-index:-99;left:0px;top:0px;width:360px;height:360px;">
+<p id="gameover" style="text-align:center;font-size:60px;"></p>
+<p id="gameover_mostrar_punts" style="text-align:center;font-size:22px;"></p>
+</div>
+<script type="text/javascript">
+//-- COTXE -->
+document.getElementById("pantalla_del_joc").appendChild(cotxe_img);
+</script>
+</div>
+<!-- CONTROL BUTTONS TITLE -->
+<div class="titol_controls" id="titol_controls" style="height:20px; width:360px; color:white; font-size:12; position:absolute; top:361px; left:0px;z-index:0; text-align:center;">
+<b>&#x25C0; Control buttons: &#x25B6;</b>
+</div>
+<script type="text/javascript">
+//-- BOTONS EN SI -->
+document.write("<button class='boto_l' ontouchstart='velocitat=-1;moure();' ontouchend='velocitat=0;' onmousedown='velocitat=-1;moure();' onmouseup='velocitat=0;' style='position:absolute; top:381px; left: 0%; width:50%; height: 180px; background-color:black;'></button>");
+document.write("<button class='boto_r' ontouchstart='velocitat=1;moure();' ontouchend='velocitat=0;' onmousedown='velocitat=1;moure();' onmouseup='velocitat=0;' style='position:absolute; top:381px; left: 50%; width:50%; height: 180px; background-color:black;'></button>");
+//control per tecles
+document.onkeydown = checkKeyDown;
+function checkKeyDown(e) 
+    {
+    if (e.keyCode == '37')
+        {
+        velocitat=-1;
+        moure();      
+        }
+    if (e.keyCode == '39') 
+        {
+        velocitat=1;
+        moure();
+        }
+    }
+document.onkeyup = checkKeyUp;
+function checkKeyUp(e) 
+    {
+    velocitat=0;
+    }
+//WORKERS
+var worker_del_transit;
+function inici_del_worker_del_transit() 
+    {
+    if (typeof(Worker) !== "undefined") 
+        {
+        if (typeof(worker_del_transit) == "undefined") 
+            {
+            worker_del_transit = new Worker("worker_transit.js");
+            }
+        worker_del_transit.onmessage = function(event_transit) 
+            {
+            if(event_transit.data.visible=="hidden")
+                {
+                document.getElementById("transit").style.visibility="hidden";
+                }
+            else
+                {
+                transit_color_cotxe=event_transit.data.colortransit;
+                transit_amplada_cotxe=event_transit.data.ampladatransit;
+                transit_posicio_horitzontal=event_transit.data.horiztransit;
+                transit_posicio_vertical=event_transit.data.verttransit;
+                conta_losers=event_transit.data.numtransit;
+                document.getElementById("span_contador_losers").innerHTML=conta_losers;
+                if (conta_losers < 11 && conta_losers > 0) 
+                    {
+                    stage_background="Montserrat";
+                    document.getElementById( "pantalla_del_joc" ).style.background = document.getElementById( "pantalla_del_joc" ).appendChild( background_Montserrat );
+                    document.getElementById("span_stage").innerHTML=stage_background;
+                    }
+                if (conta_losers < 21 && conta_losers > 10)
+                    {
+                    stage_background="Sahara";
+                    document.getElementById( "pantalla_del_joc" ).style.background = document.getElementById( "pantalla_del_joc" ).appendChild( background_Sahara );
+                    document.getElementById("span_stage").innerHTML=stage_background;
+                    } 
+               if (conta_losers < 31 && conta_losers > 20)
+                    {
+                    stage_background="Fujiyama";
+                    document.getElementById( "pantalla_del_joc" ).style.background = document.getElementById( "pantalla_del_joc" ).appendChild( background_Fujiyama );
+                    document.getElementById("span_stage").innerHTML=stage_background;
+                    }
+                if (conta_losers < 41 && conta_losers > 30)
+                    {
+                    stage_background="Egipt";
+                    document.getElementById( "pantalla_del_joc" ).style.background = document.getElementById( "pantalla_del_joc" ).appendChild( background_Egipt );
+                    document.getElementById("span_stage").innerHTML=stage_background;
+                    }
+                if (conta_losers > 40)
+                    {
+                    stage_background="China";
+                    document.getElementById( "pantalla_del_joc" ).style.background = document.getElementById( "pantalla_del_joc" ).appendChild( background_China );
+                    document.getElementById("span_stage").innerHTML=stage_background;
+                    }
+                transit="<img id='transit' src='car" + transit_color_cotxe + ".png'  style='height:" + transit_amplada_cotxe / 2 + "px; width:" + transit_amplada_cotxe + "px; position: absolute; left:" + transit_posicio_horitzontal + "px; top:" + transit_posicio_vertical + "px; z-index:2; visibility:visible'>"; 
+                document.getElementById("resultat_worker_del_transit").innerHTML = transit;
+                worker_de_les_colisions.postMessage({cotxe:posicio_cotxe, horiz:transit_posicio_horitzontal, vert:transit_posicio_vertical});
+                }
+            };
+        }
+    else 
+        {
+        document.getElementById("resultat_worker_del_transit").innerHTML = "Sorry! No Web Worker support.";
+        }
+    }
+var worker_dels_punts;
+function inici_del_worker_dels_punts() 
+    {
+    if (typeof(Worker) !== "undefined") 
+        {
+        if (typeof(worker_dels_punts) == "undefined") 
+            {
+            worker_dels_punts = new Worker("worker_punts.js");
+            }
+        worker_dels_punts.onmessage = function(event_punts) 
+            {
+            document.getElementById("resultat_worker_dels_punts").innerHTML = event_punts.data;
+            punts=event_punts.data + "00";
+            };
+        }
+    else 
+        {
+        document.getElementById("resultat_worker_dels_punts").innerHTML = "Sorry! No Web Worker support.";
+        }
+    }
+var worker_de_les_colisions;
+function inici_del_worker_de_les_colisions() 
+    {
+    if (typeof(Worker) !== "undefined") 
+        {
+        if (typeof(worker_de_les_colisions) == "undefined") 
+            {
+            worker_de_les_colisions = new Worker("worker_colisions.js");
+            }
+        worker_de_les_colisions.onmessage = function(event_colisions) 
+            {
+            if (event_colisions.data=="gameover")
+                {
+                gameover=true;
+                document.getElementById("cotxeid").style.visibility="hidden";
+                document.getElementById("pantalla_del_joc").style.visibility="hidden";
+                document.getElementById("titol_controls").innerHTML="Press any button to start";
+                document.getElementById("gameover").innerHTML="GAME OVER";
+                document.getElementById("gameover").style.visibility="visible";
+                document.getElementById("gameover_mostrar_punts").innerHTML="Score: " + punts;
+                document.getElementById("gameover_mostrar_punts").style.visibility="visible";
+                document.getElementById("transit").style.visibility="hidden";
+                worker_del_transit.terminate();
+                worker_dels_punts.terminate();
+                worker_de_les_colisions.terminate();
+                }
+            };
+        }
+    else 
+        {
+        document.getElementById("resultat_worker_de_les_colisions").innerHTML="Sorry! No Web Worker support.";
+        }
+    }
+</script>
+</div>
+</body>
+</html>
