@@ -1,6 +1,6 @@
 // sw.js
 const cacheName = "PWAv1";
-const filesToCache = ['index.html' , 'worker_del_transit.js' , 'worker_dels_punts.js' , 'worker_de_les_colisions.js' , 'background_Montserrat.gif' , 'background_Sahara.gif' , 'background_Fujiyama.gif' , 'background_Egipt.gif' , 'background_China.gif' , 'car.png', 'car1.png', 'car2.png', 'car3.png', 'car4.png', 'car5.png', 'car6.png', 'car7.png', 'car8.png', 'car9.png', 'car10.png', 'car11.png', 'car12.png', 'car13.png', '14.png', 'car15.png', 'car16.png' , 'favicon.png', 'favicon40.png', 'favicon192.png', 'favicon512.png', 'manifest.manifest'];
+const filesToCache = ['index.html' , 'worker_transit.js' , 'worker_punts.js' , 'worker_colisions.js' , 'background_Montserrat.gif' , 'background_Sahara.gif' , 'background_Fujiyama.gif' , 'background_Egipt.gif' , 'background_China.gif' , 'car.png', 'car1.png', 'car2.png', 'car3.png', 'car4.png', 'car5.png', 'car6.png', 'car7.png', 'car8.png', 'car9.png', 'car10.png', 'car11.png', 'car12.png', 'car13.png', '14.png', 'car15.png', 'car16.png' , 'favicon.png', 'favicon40.png', 'favicon192.png', 'favicon512.png', 'manifest.manifest'];
 
 self.addEventListener("install", function(event) {
   // Perform install steps
