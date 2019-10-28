@@ -3,7 +3,7 @@ All images of this project are of public domain.
 Author: Bonjour.
 Year: 2019.
 -------------------------------------------------------------------------------
-The javascript code in index.html, worker_transit.js, worker_punts.js, worker_colisions.js,and sw.js are under GPLv3 license.
+The javascript code in index.html, worker_transit.js, worker_punts.js, worker_colisions.js, and sw.js are under GPLv3 license.
 
         @licstart  The following is the entire license notice for the 
         JavaScript code in this page.
