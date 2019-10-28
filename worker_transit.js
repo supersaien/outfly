@@ -32,7 +32,7 @@ var aleatori_color;
 var aleatori;
 function aleatori()
     {
-    aleatori_color=Math.floor(Math.random()*(16-1))+1;
+    aleatori_color=Math.floor(Math.random()*(24-1))+1;
     aleatori_posicio_horitzontal=Math.floor(Math.random()*(208-118))+118; // 236 - 118 - amplada cotxe
     aleatori_trajectoria=Math.random()*(1.2-0);
     temps_entre_cotxe_i_cotxe=Math.floor(Math.random()*(4000-1500))+1800;

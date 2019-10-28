@@ -105,11 +105,11 @@ cotxe_img.setAttribute("id", "cotxeid");
 cotxe_img.setAttribute("style", "position: absolute; left:" + posicio_cotxe + "px; top:318px; z-index:4;");
 //transit
 var transit=new Array();
-for (var i=1;i<17;i++)
+for (var i=1;i<25;i++)
     {
     transit[i]=new Image();
     }
-for (var i=1;i<17;i++)
+for (var i=1;i<25;i++)
     {
     transit[i].setAttribute("src", "car" + i + ".png");
     transit[i].setAttribute("id", "transitid");
@@ -204,10 +204,10 @@ document.getElementById("pantalla_del_joc").appendChild(cotxe_img);
 <div class="titol_controls" id="titol_controls" style="height:20px; width:360px; color:white; font-size:12; position:absolute; top:361px; left:0px;z-index:0; text-align:center;">
 <b>&#x25C0; Control buttons: &#x25B6;</b>
 </div>
+<!-- BOTONS EN SI -->
+<button class='boto_l' ontouchstart='velocitat=-1;moure();' ontouchend='velocitat=0;' onmousedown='velocitat=-1;moure();' onmouseup='velocitat=0;' style='position:absolute; top:381px; left: 0%; width:50%; height: 180px; background-color:black;'></button>
+<button class='boto_r' ontouchstart='velocitat=1;moure();' ontouchend='velocitat=0;' onmousedown='velocitat=1;moure();' onmouseup='velocitat=0;' style='position:absolute; top:381px; left: 50%; width:50%; height: 180px; background-color:black;'></button>
 <script type="text/javascript">
-//-- BOTONS EN SI -->
-document.write("<button class='boto_l' ontouchstart='velocitat=-1;moure();' ontouchend='velocitat=0;' onmousedown='velocitat=-1;moure();' onmouseup='velocitat=0;' style='position:absolute; top:381px; left: 0%; width:50%; height: 180px; background-color:black;'></button>");
-document.write("<button class='boto_r' ontouchstart='velocitat=1;moure();' ontouchend='velocitat=0;' onmousedown='velocitat=1;moure();' onmouseup='velocitat=0;' style='position:absolute; top:381px; left: 50%; width:50%; height: 180px; background-color:black;'></button>");
 //control per tecles
 document.onkeydown = checkKeyDown;
 function checkKeyDown(e) 
